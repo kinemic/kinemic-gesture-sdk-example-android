@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/engine-application/engine-application.iml" filepath="$PROJECT_DIR$/engine-application/engine-application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kinemic-sdk-example-android.iml" filepath="$PROJECT_DIR$/kinemic-sdk-example-android.iml" />
+    </modules>
+  </component>
+</project>

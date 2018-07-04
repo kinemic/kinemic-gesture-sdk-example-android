@@ -1,0 +1,44 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.5.0" // used to find kinemic-sdk
+        
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+// used to find kinemic-sdk
+allprojects {
+    apply plugin: "com.jfrog.artifactory"
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+// used to find kinemic-sdk
+artifactory {
+    contextUrl = "https://kinemic.synology.me:40443/artifactory"
+    resolve {
+        repository {
+            repoKey = 'gradle-dev'
+            // these have to be supplied in gradle.properties or other files which should not be checked into version control
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
