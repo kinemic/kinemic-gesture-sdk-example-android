@@ -25,12 +25,9 @@ import de.kinemic.sdk.GestureHandler;
 import de.kinemic.sdk.SensorHandler;
 import javax.annotation.Nullable;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends EngineActivity {
 
   private static final String TAG = MainActivity.class.getSimpleName();
-
-  /** Engine object we obtain from out Activity */
-  private @Nullable Engine mEngine;
 
   /** State which indicates which action to perfom on FAB press */
   private boolean mFabDisconnects = false;
@@ -56,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
       }
     }
 
-    // Get the engine instance from our application
-    mEngine = EngineApplication.getEngine(this, true);
-
     Intent intent = getIntent();
     if (intent != null && intent.hasExtra("TITLE")) {
       setTitle(intent.getStringExtra("TITLE"));
@@ -67,22 +61,15 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onPause() {
-    // unregister handlers on pause
+  protected void unregisterHandlers() {
+    // unregister handlers on resume
     mEngine.unregister(mEngineHandler);
     mEngine.unregister(mGestureHandler);
     mEngine.unregister(mSensorHandler);
-
-    super.onPause();
   }
 
   @Override
-  protected void onResume() {
-    super.onResume();
-
-    // ensure that we have a engine (might have been released when the user left the app)
-    mEngine = EngineApplication.getEngine(this, true);
-
+  protected void registerHandlers() {
     // register handlers on resume
     mEngine.register(mEngineHandler);
     mEngine.register(mGestureHandler);
@@ -95,11 +82,6 @@ public class MainActivity extends AppCompatActivity {
     // Change the action of the FAB depending of the connection state
     mFabDisconnects = connectionState != ConnectionState.DISCONNECTED;
     mFabButton.setImageResource(mFabDisconnects ? R.drawable.ic_close_white_24dp : R.drawable.ic_search_white_24dp);
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
   }
 
   private SensorHandler mSensorHandler = new SensorHandler() {
@@ -198,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
           // Sensor was selected in list -> connect to it
           mEngine.stopSensorSearch();
           mEngine.connect(adapter.getItem(which).address);
-    });
+        });
 
     AlertDialog dialog = builder.show();
 
