@@ -27,7 +27,7 @@ allprojects {
 
 // used to find kinemic-sdk
 artifactory {
-    contextUrl = "https://kinemic.synology.me:40443/artifactory"
+    contextUrl = "https://kinemic.jfrog.io/kinemic"
     resolve {
         repository {
             repoKey = 'gradle-dev'

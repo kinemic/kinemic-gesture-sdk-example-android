@@ -36,7 +36,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // kinemic android sdk
-    implementation 'de.kinemic:android-sdk:0.6.10'
+    implementation 'de.kinemic:android-sdk:0.6.16'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
