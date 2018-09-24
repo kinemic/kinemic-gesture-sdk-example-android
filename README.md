@@ -10,8 +10,8 @@ After cloning the repository you will have to provide your credentials to [Kinem
 To do so, edit the `gradle.properties` file and update the following lines with your credentials:
 
 ```
-artifactory_user=your_kinemic_artifactory_user
-artifactory_password=your_password_or_API_Key
+kinemic_artifactory_user=your_kinemic_artifactory_user
+kinemic_artifactory_password=your_password_or_API_Key
 ```
 
 If you do not yet have credentials for Kinemic's Artifactory, please contact our [support](mailto:support@kinemic.de).

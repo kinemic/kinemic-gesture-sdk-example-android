@@ -30,10 +30,10 @@ artifactory {
     contextUrl = "https://kinemic.jfrog.io/kinemic"
     resolve {
         repository {
-            repoKey = 'gradle-dev'
+            repoKey = 'gradle-release'
             // these have to be supplied in gradle.properties or other files which should not be checked into version control
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
+            username = "${kinemic_artifactory_user}"
+            password = "${kinemic_artifactory_password}"
             maven = true
         }
     }
