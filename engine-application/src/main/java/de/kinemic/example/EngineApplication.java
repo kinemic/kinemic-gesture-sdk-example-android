@@ -8,9 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
-import de.kinemic.sdk.Engine;
-import de.kinemic.sdk.Engine.ConnectionState;
 import java.util.TimerTask;
+
+import de.kinemic.gesture.ConnectionState;
+import de.kinemic.gesture.Engine;
 
 /**
  * Custom Application which hosts the engine.
@@ -140,7 +141,7 @@ public class EngineApplication extends Application implements ActivityLifecycleC
     public synchronized void releaseEngine() {
         if (mEngine != null) {
             if (mEngine.getConnectionState() == ConnectionState.CONNECTED) {
-                mLastSensor = mEngine.getSensor();
+                mLastSensor = mEngine.getBand();
                 mGotDisconnected = true;
                 mDisconnectedAt = System.currentTimeMillis();
 

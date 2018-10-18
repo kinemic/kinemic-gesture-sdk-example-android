@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import de.kinemic.sdk.Engine;
+import de.kinemic.gesture.Engine;
 
 public class EngineService extends Service {
   private static final String TAG = EngineService.class.getSimpleName();

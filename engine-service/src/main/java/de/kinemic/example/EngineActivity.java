@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import de.kinemic.sdk.Engine;
+import de.kinemic.gesture.Engine;
 
 public class EngineActivity extends AppCompatActivity {
   private static final String TAG = EngineActivity.class.getSimpleName();

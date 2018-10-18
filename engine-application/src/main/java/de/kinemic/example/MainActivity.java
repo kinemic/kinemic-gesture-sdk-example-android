@@ -17,12 +17,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import de.kinemic.sdk.Engine;
-import de.kinemic.sdk.Engine.ConnectionState;
-import de.kinemic.sdk.EngineHandler;
-import de.kinemic.sdk.EnumHelper;
-import de.kinemic.sdk.GestureHandler;
-import de.kinemic.sdk.SensorHandler;
+import de.kinemic.gesture.ActivationState;
+import de.kinemic.gesture.Engine;
+import de.kinemic.gesture.ConnectionState;
+import de.kinemic.gesture.EnumNames;
+import de.kinemic.gesture.OnActivationStateChangeListener;
+import de.kinemic.gesture.OnBatteryChangeListener;
+import de.kinemic.gesture.OnConnectionStateChangeListener;
+import de.kinemic.gesture.OnGestureListener;
+
 import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,9 +72,10 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onPause() {
     // unregister handlers on pause
-    mEngine.unregister(mEngineHandler);
-    mEngine.unregister(mGestureHandler);
-    mEngine.unregister(mSensorHandler);
+    mEngine.unregisterOnConnectionStateChangeListener(mConnectionStateListener);
+    mEngine.unregisterOnGestureListener(mGestureListener);
+    mEngine.unregisterOnActivationStateChangeListener(mActivationStateChangeListener);
+    mEngine.unregisterOnBatteryChangeListener(mBatteryChangeListener);
 
     super.onPause();
   }
@@ -84,14 +88,15 @@ public class MainActivity extends AppCompatActivity {
     mEngine = EngineApplication.getEngine(this, true);
 
     // register handlers on resume
-    mEngine.register(mEngineHandler);
-    mEngine.register(mGestureHandler);
-    mEngine.register(mSensorHandler);
+    mEngine.registerOnConnectionStateChangeListener(mConnectionStateListener);
+    mEngine.registerOnGestureListener(mGestureListener);
+    mEngine.registerOnActivationStateChangeListener(mActivationStateChangeListener);
+    mEngine.registerOnBatteryChangeListener(mBatteryChangeListener);
 
     updateFabButton(mEngine.getConnectionState());
   }
 
-  private void updateFabButton(@Engine.ConnectionState int connectionState) {
+  private void updateFabButton(@ConnectionState int connectionState) {
     // Change the action of the FAB depending of the connection state
     mFabDisconnects = connectionState != ConnectionState.DISCONNECTED;
     mFabButton.setImageResource(mFabDisconnects ? R.drawable.ic_close_white_24dp : R.drawable.ic_search_white_24dp);
@@ -102,44 +107,46 @@ public class MainActivity extends AppCompatActivity {
     super.onDestroy();
   }
 
-  private SensorHandler mSensorHandler = new SensorHandler() {
+  private OnBatteryChangeListener mBatteryChangeListener = new OnBatteryChangeListener() {
     @Override
     public void onBatteryChanged(int batteryPercent) {
       Snackbar.make(mFabButton, "Battery: " + batteryPercent, Snackbar.LENGTH_SHORT).show();
       Log.i(TAG, "battery changed: " + batteryPercent);
     }
+  };
 
+  private OnActivationStateChangeListener mActivationStateChangeListener = new OnActivationStateChangeListener() {
     @Override
-    public void onActivationStateChanged(@Engine.ActivationState int state) {
+    public void onActivationStateChanged(int state) {
       Snackbar.make(mFabButton, "ActivationState: " + nameOfAS(state), Snackbar.LENGTH_SHORT).show();
       Log.i(TAG, "activation state changed: " + nameOfAS(state));
     }
   };
 
-  private EngineHandler mEngineHandler = new EngineHandler() {
+  private OnConnectionStateChangeListener mConnectionStateListener = new OnConnectionStateChangeListener() {
     @Override
-    public void onConnectionStateChanged(@Engine.ConnectionState int state) {
+    public void onConnectionStateChanged(int state) {
       updateFabButton(state);
 
-      Snackbar.make(mFabButton, "ConnectionState: " + EnumHelper.nameFromConnectionState(state), Snackbar.LENGTH_SHORT).show();
-      Log.i(TAG, "connection state changed: " + EnumHelper.nameFromConnectionState(state));
+      Snackbar.make(mFabButton, "ConnectionState: " + EnumNames.fromConnectionState(state), Snackbar.LENGTH_SHORT).show();
+      Log.i(TAG, "connection state changed: " + EnumNames.fromConnectionState(state));
     }
   };
 
-  private GestureHandler mGestureHandler = new GestureHandler() {
+  private OnGestureListener mGestureListener = new OnGestureListener() {
     @Override
-    public void onGesture(@Engine.GestureId int gesture) {
-      Snackbar.make(mFabButton, "Gesture: " + EnumHelper.nameFrom(gesture), Snackbar.LENGTH_SHORT).show();
-      Log.i(TAG, "got gesture: " + EnumHelper.nameFrom(gesture));
+    public void onGesture(int gesture) {
+      Snackbar.make(mFabButton, "Gesture: " + EnumNames.fromGesture(gesture), Snackbar.LENGTH_SHORT).show();
+      Log.i(TAG, "got gesture: " + EnumNames.fromGesture(gesture));
     }
   };
 
   /** small helper for readable activation states */
-  private String nameOfAS(@Engine.ActivationState int state) {
+  private String nameOfAS(@ActivationState int state) {
     switch (state) {
-      case Engine.ActivationState.ACTIVE:
+      case ActivationState.ACTIVE:
         return "Active";
-      case Engine.ActivationState.INACTIVE:
+      case ActivationState.INACTIVE:
         return "Inactive";
       default:
         return "Unknown"; // will never happen
@@ -189,14 +196,14 @@ public class MainActivity extends AppCompatActivity {
     SearchResultAdapter adapter = new SearchResultAdapter(this);
 
     AlertDialog.Builder builder = new AlertDialog.Builder(this)
-        .setIcon(de.kinemic.sdk.R.drawable.ic_search_black_24dp)
+        .setIcon(de.kinemic.gesture.R.drawable.ic_search_black_24dp)
         .setTitle("Select Sensor")
         .setPositiveButton("Clear", null)
         .setNegativeButton("Cancel", null)
-        .setOnDismissListener(dialogInterface -> mEngine.stopSensorSearch())
+        .setOnDismissListener(dialogInterface -> mEngine.stopSearch())
         .setAdapter(adapter, (dialog, which) -> {
           // Sensor was selected in list -> connect to it
-          mEngine.stopSensorSearch();
+          mEngine.stopSearch();
           mEngine.connect(adapter.getItem(which).address);
     });
 
@@ -205,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     // reuse the positive button to non closing action (needs to be done here to not close)
     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> adapter.clear());
 
-    mEngine.startSensorSearch(adapter);
+    mEngine.startSearch(adapter);
   }
 
 }

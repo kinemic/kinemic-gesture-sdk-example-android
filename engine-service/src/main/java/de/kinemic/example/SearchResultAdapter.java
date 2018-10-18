@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.kinemic.example.SearchResultAdapter.MutableSearchResult;
-import de.kinemic.sdk.SearchCallback;
-import de.kinemic.sdk.SearchResult;
+import de.kinemic.gesture.SearchCallback;
+import de.kinemic.gesture.SearchResult;
 import java.util.Collection;
 
 
@@ -19,7 +19,7 @@ import java.util.Collection;
  * List adapter to manage search results.
  *
  * Implements SearchCallback and thus should be used in
- * {@link de.kinemic.sdk.Engine#startSensorSearch(SearchCallback)}
+ * {@link de.kinemic.gesture.Engine#startSearch(SearchCallback)}
  */
 public class SearchResultAdapter extends ArrayAdapter<MutableSearchResult> implements SearchCallback {
 
@@ -58,7 +58,7 @@ public class SearchResultAdapter extends ArrayAdapter<MutableSearchResult> imple
     }
 
     @Override
-    public void onSensorFound(SearchResult sensor) {
+    public void onBandFound(SearchResult sensor) {
         update(sensor);
     }
 
@@ -77,8 +77,8 @@ public class SearchResultAdapter extends ArrayAdapter<MutableSearchResult> imple
         TextView rssi;
 
         ViewHolder(View view) {
-            address = view.findViewById(de.kinemic.sdk.R.id.sensor_address);
-            rssi = view.findViewById(de.kinemic.sdk.R.id.sensor_rssi);
+            address = view.findViewById(de.kinemic.gesture.R.id.sensor_address);
+            rssi = view.findViewById(de.kinemic.gesture.R.id.sensor_rssi);
         }
     }
 
