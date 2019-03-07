@@ -9,19 +9,25 @@
     tools:context="de.kinemic.example.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/sensor_controls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_chainStyle="spread_inside">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/buzz_button"
@@ -50,15 +56,4 @@
             android:buttonTint="@android:color/holo_blue_light"
             android:text="Blue" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/child_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Navigate To Child"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sensor_controls"
-        tools:layout_editor_absoluteX="113dp" />
 </android.support.constraint.ConstraintLayout>

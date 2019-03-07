@@ -35,8 +35,12 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    // to demonstrate the AirMouse
+    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+
     // kinemic android sdk
-    implementation 'de.kinemic:gesture-sdk:0.8.2'
+    implementation 'de.kinemic:gesture-sdk:0.10.2'
+    implementation 'de.kinemic:gesture-common:0.10.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

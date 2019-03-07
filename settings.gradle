@@ -1,1 +1,1 @@
-include ':engine-application', ":engine-service"
+include ':engine-application'

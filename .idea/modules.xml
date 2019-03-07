@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/engine-application/engine-application.iml" filepath="$PROJECT_DIR$/engine-application/engine-application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/engine-service/engine-service.iml" filepath="$PROJECT_DIR$/engine-service/engine-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/kinemic-gesture-sdk-example-android.iml" filepath="$PROJECT_DIR$/kinemic-gesture-sdk-example-android.iml" />
     </modules>
   </component>
