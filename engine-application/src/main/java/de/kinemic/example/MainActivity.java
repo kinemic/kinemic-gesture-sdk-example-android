@@ -10,15 +10,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 import de.kinemic.gesture.ActivationState;
 import de.kinemic.gesture.ConnectionReason;
 import de.kinemic.gesture.ConnectionState;
@@ -44,18 +43,25 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
 
     private PDFViewAirmouseAdapter mAirmouseAdapter;
 
-    @BindView(R.id.fabSensor) FloatingActionButton mFabButton;
-    @BindView(R.id.fabGestureDark) FloatingActionButton mFabGestureDark;
-    @BindView(R.id.pdfView) PDFView mPdfView;
+    private FloatingActionButton mFabButton;
+    private FloatingActionButton mFabGestureDark;
+    private PDFView mPdfView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ButterKnife.bind(this);
+        mFabButton = findViewById(R.id.fabSensor);
+        mFabGestureDark = findViewById(R.id.fabGestureDark);
+        mPdfView = findViewById(R.id.pdfView);
+
+        findViewById(R.id.buzz_button).setOnClickListener(vibration_button_listener);
+        findViewById(R.id.red_box).setOnClickListener(color_box_listener);
+        findViewById(R.id.green_box).setOnClickListener(color_box_listener);
+        findViewById(R.id.blue_box).setOnClickListener(color_box_listener);
 
         mEngine = getEngine();
 
@@ -153,18 +159,22 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
         }
     }
 
-    @OnClick(R.id.buzz_button)
-    public void vibrate() {
-        mEngine.vibrate(300);
-    }
+    private View.OnClickListener vibration_button_listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mEngine.vibrate(300);
+        }
+    };
 
-    @OnCheckedChanged({R.id.red_box, R.id.green_box, R.id.blue_box})
-    public void changeColor() {
-        boolean red = ((CheckBox) findViewById(R.id.red_box)).isChecked();
-        boolean green = ((CheckBox) findViewById(R.id.green_box)).isChecked();
-        boolean blue = ((CheckBox) findViewById(R.id.blue_box)).isChecked();
+    private View.OnClickListener color_box_listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            boolean red = ((CheckBox) findViewById(R.id.red_box)).isChecked();
+            boolean green = ((CheckBox) findViewById(R.id.green_box)).isChecked();
+            boolean blue = ((CheckBox) findViewById(R.id.blue_box)).isChecked();
 
-        mEngine.setLed(red, green, blue);
-    }
+            mEngine.setLed(red, green, blue);
+        }
+    };
 
 }
