@@ -31,9 +31,6 @@ artifactory {
     resolve {
         repository {
             repoKey = 'gradle-release'
-            // these have to be supplied in gradle.properties or other files which should not be checked into version control
-            username = "${kinemic_artifactory_user}"
-            password = "${kinemic_artifactory_password}"
             maven = true
         }
     }
