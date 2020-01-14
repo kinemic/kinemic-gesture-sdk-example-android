@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/engine-application/engine-application.iml" filepath="$PROJECT_DIR$/engine-application/engine-application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kinemic-gesture-sdk-example-android.iml" filepath="$PROJECT_DIR$/kinemic-gesture-sdk-example-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/engine-application/engine-application.iml" filepath="$PROJECT_DIR$/engine-application/engine-application.iml" group="kinemic-gesture-sdk-example-android/engine-application" />
+      <module fileurl="file://$PROJECT_DIR$/kinemic-gesture-sdk-example-android.iml" filepath="$PROJECT_DIR$/kinemic-gesture-sdk-example-android.iml" group="kinemic-gesture-sdk-example-android" />
     </modules>
   </component>
 </project>
