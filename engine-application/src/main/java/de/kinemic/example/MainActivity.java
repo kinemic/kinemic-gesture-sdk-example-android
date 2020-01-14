@@ -1,19 +1,14 @@
 package de.kinemic.example;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -29,7 +24,6 @@ import de.kinemic.gesture.OnConnectionStateChangeListener;
 import de.kinemic.gesture.OnGestureListener;
 import de.kinemic.gesture.OnStreamQualityChangeListener;
 import de.kinemic.gesture.common.EngineActivity;
-import de.kinemic.gesture.common.EngineProvider;
 import de.kinemic.gesture.common.fragments.BandFloatingActionButtonFragment;
 import de.kinemic.gesture.common.fragments.BandMenuFragment;
 import de.kinemic.gesture.common.fragments.GestureFloatingActionButtonFragment;
@@ -44,8 +38,6 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
     private PDFViewAirmouseAdapter mAirmouseAdapter;
 
     private FloatingActionButton mFabButton;
-    private FloatingActionButton mFabGestureDark;
-    private PDFView mPdfView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +47,8 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
         setSupportActionBar(toolbar);
 
         mFabButton = findViewById(R.id.fabSensor);
-        mFabGestureDark = findViewById(R.id.fabGestureDark);
-        mPdfView = findViewById(R.id.pdfView);
+        FloatingActionButton mFabGestureDark = findViewById(R.id.fabGestureDark);
+        PDFView mPdfView = findViewById(R.id.pdfView);
 
         findViewById(R.id.buzz_button).setOnClickListener(vibration_button_listener);
         findViewById(R.id.red_box).setOnClickListener(color_box_listener);
@@ -92,7 +84,7 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
 
         mPdfView.fromAsset("Sample.pdf")
                 .pages(0)
-                .onDraw(mAirmouseAdapter) /* debug */
+                .onDraw(mAirmouseAdapter)
                 .load();
     }
 

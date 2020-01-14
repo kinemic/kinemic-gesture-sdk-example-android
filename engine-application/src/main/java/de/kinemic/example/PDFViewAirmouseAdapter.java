@@ -4,18 +4,18 @@
 
 package de.kinemic.example;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import android.util.Log;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -52,7 +52,7 @@ public class PDFViewAirmouseAdapter implements OnAirmouseEventListener, OnDrawLi
 
     private Runnable refresher = () -> pdfView.loadPages();
     
-    public PDFViewAirmouseAdapter(LifecycleOwner owner, Engine engine, PDFView pdfView) {
+    PDFViewAirmouseAdapter(LifecycleOwner owner, Engine engine, PDFView pdfView) {
         pointerPaint.setColor(Color.RED);
         bandPaint.setColor(Color.BLUE);
         
@@ -63,11 +63,11 @@ public class PDFViewAirmouseAdapter implements OnAirmouseEventListener, OnDrawLi
         owner.getLifecycle().addObserver(this);
     }
 
-    public boolean isAirmouseActive() {
+    boolean isAirmouseActive() {
         return airmouseActive;
     }
 
-    public void setAirmouseActive(boolean active) {
+    void setAirmouseActive(boolean active) {
         if (active == airmouseActive) return;
         if (active) {
             airmouseActive = true;
@@ -103,7 +103,7 @@ public class PDFViewAirmouseAdapter implements OnAirmouseEventListener, OnDrawLi
     }
 
     @Override
-    public void onMove(float x, float y, @NonNull AirmousePalmDirection palmFacing) {
+    public void onMove(float x, float y, float wrist_angle, @NonNull AirmousePalmDirection palmFacing) {
         //Log.d(TAG, "onMove: " + x + ", " + y + ", " + EnumNames.fromFacing(palmFacing));
         if (!airmouseValid || palmFacing != airmouseMode) {
             airmouseX = x;
