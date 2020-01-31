@@ -36,8 +36,8 @@ dependencies {
     implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
 
     // kinemic android sdk
-    implementation 'de.kinemic:gesture-sdk:1.1.0-dev.19'
-    implementation 'de.kinemic:gesture-common:1.1.0-dev.19'
+    implementation 'de.kinemic:gesture-sdk:1.1.0-dev.21'
+    implementation 'de.kinemic:gesture-common:1.1.0-dev.21'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
