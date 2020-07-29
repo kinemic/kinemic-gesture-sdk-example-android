@@ -1,26 +1,27 @@
 package de.kinemic.example;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import de.kinemic.gesture.ActivationState;
 import de.kinemic.gesture.ConnectionReason;
 import de.kinemic.gesture.ConnectionState;
-import de.kinemic.gesture.Engine;
+import de.kinemic.gesture.EngineDevelop;
 import de.kinemic.gesture.Gesture;
 import de.kinemic.gesture.OnActivationStateChangeListener;
 import de.kinemic.gesture.OnBatteryChangeListener;
 import de.kinemic.gesture.OnConnectionStateChangeListener;
+import de.kinemic.gesture.OnDigitListener;
 import de.kinemic.gesture.OnGestureListener;
 import de.kinemic.gesture.OnStreamQualityChangeListener;
 import de.kinemic.gesture.common.EngineActivity;
@@ -29,11 +30,12 @@ import de.kinemic.gesture.common.fragments.BandMenuFragment;
 import de.kinemic.gesture.common.fragments.GestureFloatingActionButtonFragment;
 
 public class MainActivity extends EngineActivity implements OnActivationStateChangeListener,
-        OnBatteryChangeListener, OnConnectionStateChangeListener, OnGestureListener, OnStreamQualityChangeListener {
+        OnBatteryChangeListener, OnConnectionStateChangeListener, OnGestureListener, OnStreamQualityChangeListener,
+        OnDigitListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private Engine mEngine;
+    private EngineDevelop mEngine;
 
     private PDFViewAirmouseAdapter mAirmouseAdapter;
 
@@ -55,7 +57,7 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
         findViewById(R.id.green_box).setOnClickListener(color_box_listener);
         findViewById(R.id.blue_box).setOnClickListener(color_box_listener);
 
-        mEngine = getEngine();
+        mEngine = (EngineDevelop) getEngine();
 
         if (savedInstanceState == null) {
             // this fragment manages a sensor menu icon which depicts the sensor state with its icon and shows a info dialog on click
@@ -95,6 +97,7 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
         mEngine.unregisterOnActivationStateChangeListener(this);
         mEngine.unregisterOnConnectionStateChangeListener(this);
         mEngine.unregisterOnGestureListener(this);
+        mEngine.unregisterOnDigitListener(this);
         mEngine = null;
 
         super.onPause();
@@ -104,7 +107,7 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
     protected void onResume() {
         super.onResume();
 
-        mEngine = getEngine();
+        mEngine = (EngineDevelop) getEngine();
         checkPermissions();
 
         mEngine.registerOnBatteryChangeListener(this);
@@ -112,6 +115,7 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
         mEngine.registerOnActivationStateChangeListener(this);
         mEngine.registerOnConnectionStateChangeListener(this);
         mEngine.registerOnGestureListener(this);
+        mEngine.registerOnDigitListener(this);
     }
 
     @Override
@@ -149,6 +153,13 @@ public class MainActivity extends EngineActivity implements OnActivationStateCha
             mAirmouseAdapter.setAirmouseActive(false);
             Toast.makeText(this, "AirMouse stopped", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onDigit(int digit) {
+        mEngine.vibrate(150);
+        Log.i(TAG, "got digit: " + digit);
+        Toast.makeText(this, "Digit: " + digit, Toast.LENGTH_SHORT).show();
     }
 
     private View.OnClickListener vibration_button_listener = new View.OnClickListener() {

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -26,6 +28,9 @@ android {
 }
 
 dependencies {
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -36,10 +41,14 @@ dependencies {
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
 
     // kinemic android sdk
-    implementation 'de.kinemic:gesture-sdk:1.1.0-dev.22'
+    implementation 'de.kinemic:gesture-sdk-develop:1.1.0-dev.22'
     implementation 'de.kinemic:gesture-common:1.1.0-dev.22'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+repositories {
+    mavenCentral()
 }
