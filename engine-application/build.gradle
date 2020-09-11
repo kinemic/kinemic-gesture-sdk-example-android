@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
@@ -26,20 +28,27 @@ android {
 }
 
 dependencies {
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.media:media:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     // to demonstrate the AirMouse
-    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
 
     // kinemic android sdk
-    implementation 'de.kinemic:gesture-sdk:1.1.0-dev.21'
-    implementation 'de.kinemic:gesture-common:1.1.0-dev.21'
+    implementation 'de.kinemic:gesture-sdk:1.1.0-dev.22'
+    implementation 'de.kinemic:gesture-common:1.1.0-dev.22'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+repositories {
+    mavenCentral()
 }
